@@ -30,46 +30,43 @@ playButton.addEventListener('click', function() {
 });
 
 guessButton.addEventListener('click', function() {
-//     After each wrong guess, also tell the player how close they are based on Math.abs(guess - answer):
-
-// Difference ≤ 2 → message must contain "hot" (case-insensitive)
-// Difference ≤ 5 → message must contain "warm" (case-insensitive)
-// Difference > 5 → message must contain "cold" (case-insensitive)
-    const guess = parseInt(guessInput.value);
+//At the top of your script, use prompt() to ask for the player's name. Case it correctly — capitalize the first letter and lowercase the rest (e.g., "jOhN" becomes "John"). Use the name in your game messages. The autograder sends "jOhN" and checks that #msg contains "John" after clicking Play and after a correct guess
+    
+const guess = parseInt(guessInput.value);
     if (isNaN(guess)) {
         feedback.textContent = "Please enter a valid number.";
         return;
     }
     if (guess > randNum) {
-        feedback.textContent = "Too high! Try again.";
+        feedback.textContent = `${name}: Too high! Try again.`;
         const difference = Math.abs(guess - randNum);
         if (difference <= 2) {
-            feedback.textContent = "Too high! You're hot!";
+            feedback.textContent = `${name}: Too high! You're hot!`;
         } else if (difference <= 5) {
-            feedback.textContent = "Too high! You're warm!";
+            feedback.textContent = `${name}: Too high! You're warm!`;
         } else {
-            feedback.textContent = "Too high! You're cold!";
+            feedback.textContent = `${name}: Too high! You're cold!`;
         }
 
     } else if (guess < randNum) {
-        feedback.textContent = "Too low! Try again.";
+        feedback.textContent = `${name}: Too low! Try again.`;
         const difference = Math.abs(guess - randNum);
         if (difference <= 2) {
-            feedback.textContent = "Too low! You're hot!";
+            feedback.textContent = `${name}: Too low! You're hot!`;
         } else if (difference <= 5) {
-            feedback.textContent = "Too low! You're warm!";
+            feedback.textContent = `${name}: Too low! You're warm!`;
         } else {
-            feedback.textContent = "Too low! You're cold!";
+            feedback.textContent = `${name}: Too low! You're cold!`;
         }
     } else {
-        feedback.textContent = "Correct! You've guessed the number!";
+        feedback.textContent = `${name}: Correct! You've guessed the number!`;
         guessButton.disabled = true;
         giveUpButton.disabled = true;
     }
 });
 
 giveUpButton.addEventListener('click', function() {
-    feedback.textContent = `The correct number was ${randNum}. Better luck next time!`;
+    feedback.textContent = `${name}: The correct number was ${randNum}. Better luck next time!`;
     guessButton.disabled = true;
     giveUpButton.disabled = true;
 });
