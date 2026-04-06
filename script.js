@@ -30,7 +30,6 @@ playButton.addEventListener('click', function() {
 });
 
 guessButton.addEventListener('click', function() {
-//At the top of your script, use prompt() to ask for the player's name. Case it correctly — capitalize the first letter and lowercase the rest (e.g., "jOhN" becomes "John"). Use the name in your game messages. The autograder sends "jOhN" and checks that #msg contains "John" after clicking Play and after a correct guess
     
 const guess = parseInt(guessInput.value);
     if (isNaN(guess)) {
