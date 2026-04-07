@@ -27,6 +27,7 @@ playButton.addEventListener('click', function() {
     guessInput.value = '';
     guessButton.disabled = false;
     giveUpButton.disabled = false;
+    playButton.disabled = true;
 });
 
 guessButton.addEventListener('click', function() {
@@ -61,6 +62,7 @@ const guess = parseInt(guessInput.value);
         feedback.textContent = `${name}: Correct! You've guessed the number!`;
         guessButton.disabled = true;
         giveUpButton.disabled = true;
+        playButton.disabled = false;
     }
 });
 
@@ -68,6 +70,7 @@ giveUpButton.addEventListener('click', function() {
     feedback.textContent = `${name}: The correct number was ${randNum}. Better luck next time!`;
     guessButton.disabled = true;
     giveUpButton.disabled = true;
+    playButton.disabled = false;
 });
 
 function getDifficulty() {
