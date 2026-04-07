@@ -11,6 +11,40 @@ const leaderboard = document.getElementsByName("leaderboard");
 let name = prompt("Please enter your name:").toLowerCase();
 name = name.charAt(0).toUpperCase() + name.slice(1);
 const feedback = document.getElementById("msg");
+const dateDisplay = document.getElementById("date");;
+// 10. Date with Month Names and Suffixes (10 pts)
+// Display the current date in #date using:
+
+// The full month name (January, February, ... December) — not a number
+// The day with a suffix (1st, 2nd, 3rd, 4th, 11th, 12th, 13th, 21st, 22nd, etc.)
+// The current year (e.g., 2025)
+// 11. Live Time (5 pts)
+// Use setInterval to update the #date display every second. The autograder waits 2 seconds and checks that the text has changed. You must include seconds in your time display for this to work.
+function getSuffix(day) {
+    if (day >= 11 && day <= 13) {
+        return "th";
+    } else {
+        switch (day % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+        }
+    }
+}
+function updateDate() {
+    date = new Date();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const month = monthNames[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    dateDisplay.textContent = `${month} ${day}${getSuffix(day)}, ${year} ${hours}:${minutes}:${seconds}`;
+}
+setInterval(updateDate, 1000);
+updateDate();
 
 let randNum = -1;
 let totalWins = 0;
