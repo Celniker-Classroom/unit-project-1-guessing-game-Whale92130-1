@@ -84,6 +84,7 @@ giveUpButton.addEventListener('click', function () {
     } else if (getDifficulty() == 'hard') {
         totalGuesses = 100;
     }
+    totalWins++;
     totalAttempts++;
     updateLeaderboardandGuesses();
 });
