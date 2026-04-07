@@ -11,15 +11,10 @@ const leaderboard = document.getElementsByName("leaderboard");
 let name = prompt("Please enter your name:").toLowerCase();
 name = name.charAt(0).toUpperCase() + name.slice(1);
 const feedback = document.getElementById("msg");
-const dateDisplay = document.getElementById("date");;
-// 10. Date with Month Names and Suffixes (10 pts)
-// Display the current date in #date using:
-
-// The full month name (January, February, ... December) — not a number
-// The day with a suffix (1st, 2nd, 3rd, 4th, 11th, 12th, 13th, 21st, 22nd, etc.)
-// The current year (e.g., 2025)
-// 11. Live Time (5 pts)
-// Use setInterval to update the #date display every second. The autograder waits 2 seconds and checks that the text has changed. You must include seconds in your time display for this to work.
+const dateDisplay = document.getElementById("date");
+const timerDisplay = document.getElementById("timer");
+const bestTimeDisplay = document.getElementById("fastest");
+const avgTimeDisplay = document.getElementById("avgTime");
 function getSuffix(day) {
     if (day >= 11 && day <= 13) {
         return "th";
@@ -59,6 +54,8 @@ let avgGuesses = 0;
 let bestGuesses = ["","",""];
 
 playButton.addEventListener('click', function () {
+    let date = new Date();
+
     const diff = getDifficulty();
     if (diff === 'easy') {
         //from 1 to 3
