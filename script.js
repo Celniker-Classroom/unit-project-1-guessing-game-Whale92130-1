@@ -38,8 +38,8 @@ function updateDate() {
     const month = monthNames[date.getMonth()];
     const day = date.getDate();
     const year = date.getFullYear();
-    const hours = Number(String(date.getHours()).padStart(2, '0'));
-    const amPm = "AM";
+    let hours = Number(String(date.getHours()).padStart(2, '0'));
+    let amPm = "AM";
     if (hours >= 12) {
         hours -= 12;
         amPm = "PM";
