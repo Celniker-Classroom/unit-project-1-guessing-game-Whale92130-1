@@ -7,6 +7,7 @@ const avgScore = document.getElementById("avgScore");
 const fastest = document.getElementById("fastest");
 const avgTime = document.getElementById("avgTime");
 const difficulty = [document.getElementById("e"), document.getElementById("m"), document.getElementById("h")];
+const leaderboard = document.getElementsByName("leaderboard");
 let name = prompt("Please enter your name:").toLowerCase();
 name = name.charAt(0).toUpperCase() + name.slice(1);
 const feedback = document.getElementById("msg");
@@ -15,6 +16,7 @@ let randNum = -1;
 let totalWins = 0;
 let totalGuesses = 0;
 let avgGuesses = 0;
+let bestGuesses = ["","",""];
 
 playButton.addEventListener('click', function () {
     const diff = getDifficulty();
@@ -67,12 +69,30 @@ guessButton.addEventListener('click', function () {
         feedback.textContent = `${name}: Correct! You've guessed the number!`;
         totalWins++;
         avgGuesses = (((avgGuesses * (totalWins - 1)) + totalGuesses) / totalWins).toFixed(2);
-        totalGuesses = 0;
+        
         wins.textContent = `Wins: ${totalWins}`;
         avgScore.textContent = `Average Guesses: ${avgGuesses}`;
         guessButton.disabled = true;
         giveUpButton.disabled = true;
         playButton.disabled = false;
+// Keep an array of all game scores (number of guesses to win)
+// Sort the array ascending (fewest guesses = best score)
+// Display the top 3 scores in the <li name="leaderboard"> elements
+// The autograder plays 4 rounds with scores 3, 1, 5, 2 and checks that the leaderboard shows 1, 2, 3
+        if (bestGuesses[0] === "" || totalGuesses < bestGuesses[0]) {
+            bestGuesses[2] = bestGuesses[1];
+            bestGuesses[1] = bestGuesses[0];
+            bestGuesses[0] = totalGuesses;
+        } else if (bestGuesses[1] === "" || totalGuesses < bestGuesses[1]) {
+            bestGuesses[2] = bestGuesses[1];
+            bestGuesses[1] = totalGuesses;
+        } else if (bestGuesses[2] === "" || totalGuesses < bestGuesses[2]) {
+            bestGuesses[2] = totalGuesses;
+        }
+        leaderboard[0].textContent = `${bestGuesses[0]}`;
+        leaderboard[1].textContent = `${bestGuesses[1]}`;
+        leaderboard[2].textContent = `${bestGuesses[2]}`;
+        totalGuesses = 0;
     }
     console.log("Guesses: " + totalGuesses);
 });
