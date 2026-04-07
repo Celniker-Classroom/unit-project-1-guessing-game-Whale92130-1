@@ -7,12 +7,13 @@ const avgScore = document.getElementById("avgScore");
 const fastest = document.getElementById("fastest");
 const avgTime = document.getElementById("avgTime");
 const difficulty = [document.getElementById("e"), document.getElementById("m"), document.getElementById("h")];
-const name = prompt("Please enter your name:");
+let name = prompt("Please enter your name:").toLowerCase();
+name = name.charAt(0).toUpperCase() + name.slice(1);
 const feedback = document.getElementById("msg");
 
 let randNum = -1;
 
-playButton.addEventListener('click', function() {
+playButton.addEventListener('click', function () {
     const diff = getDifficulty();
     if (diff === 'easy') {
         //from 1 to 3
@@ -25,14 +26,15 @@ playButton.addEventListener('click', function() {
         randNum = Math.floor(Math.random() * 100) + 1;
     }
     guessInput.value = '';
+    feedback.textContent = `${name}: Game started! Make your guess.`;
     guessButton.disabled = false;
     giveUpButton.disabled = false;
     playButton.disabled = true;
 });
 
-guessButton.addEventListener('click', function() {
-    
-const guess = parseInt(guessInput.value);
+guessButton.addEventListener('click', function () {
+
+    const guess = parseInt(guessInput.value);
     if (isNaN(guess)) {
         feedback.textContent = "Please enter a valid number.";
         return;
@@ -66,7 +68,7 @@ const guess = parseInt(guessInput.value);
     }
 });
 
-giveUpButton.addEventListener('click', function() {
+giveUpButton.addEventListener('click', function () {
     feedback.textContent = `${name}: The correct number was ${randNum}. Better luck next time!`;
     guessButton.disabled = true;
     giveUpButton.disabled = true;
