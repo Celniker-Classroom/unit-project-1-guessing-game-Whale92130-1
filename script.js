@@ -38,10 +38,15 @@ function updateDate() {
     const month = monthNames[date.getMonth()];
     const day = date.getDate();
     const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
+    const hours = Number(String(date.getHours()).padStart(2, '0'));
+    const amPm = "AM";
+    if (hours >= 12) {
+        hours -= 12;
+        amPm = "PM";
+    }
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const seconds = String(date.getSeconds()).padStart(2, '0');
-    dateDisplay.textContent = `${month} ${day}${getSuffix(day)}, ${year} ${hours}:${minutes}:${seconds}`;
+    dateDisplay.textContent = `${month} ${day}${getSuffix(day)}, ${year} ${hours}:${minutes}:${seconds} ${amPm}`;
 }
 setInterval(updateDate, 1000);
 updateDate();
