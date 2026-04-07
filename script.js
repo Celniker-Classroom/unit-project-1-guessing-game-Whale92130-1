@@ -68,17 +68,43 @@ guessButton.addEventListener('click', function () {
     } else {
         feedback.textContent = `${name}: Correct! You've guessed the number!`;
         totalWins++;
-        avgGuesses = (((avgGuesses * (totalWins - 1)) + totalGuesses) / totalWins).toFixed(2);
-        
+        updateLeaderboardandGuesses();
+    }
+    console.log("Guesses: " + totalGuesses);
+});
+
+giveUpButton.addEventListener('click', function () {
+    feedback.textContent = `${name}: The correct number was ${randNum}. Better luck next time!`;
+    guessButton.disabled = true;
+    giveUpButton.disabled = true;
+    playButton.disabled = false;
+    if (getDifficulty() === 'easy') {
+        totalGuesses = 3;
+    } else if (getDifficulty() === 'medium') {
+        totalGuesses = 10;
+    } else if (getDifficulty() === 'hard') {
+        totalGuesses = 100;
+    }
+    updateLeaderboardandGuesses();
+});
+
+function getDifficulty() {
+    for (let e of difficulty) {
+        if (e.checked) {
+            if (e.id === 'e') return 'easy';
+            if (e.id === 'm') return 'medium';
+            if (e.id === 'h') return 'hard';
+        }
+    }
+}
+function updateLeaderboardandGuesses() {
+    
+    avgGuesses = (((avgGuesses * (totalWins - 1)) + totalGuesses) / totalWins).toFixed(2);
         wins.textContent = `Wins: ${totalWins}`;
         avgScore.textContent = `Average Guesses: ${avgGuesses}`;
         guessButton.disabled = true;
         giveUpButton.disabled = true;
         playButton.disabled = false;
-// Keep an array of all game scores (number of guesses to win)
-// Sort the array ascending (fewest guesses = best score)
-// Display the top 3 scores in the <li name="leaderboard"> elements
-// The autograder plays 4 rounds with scores 3, 1, 5, 2 and checks that the leaderboard shows 1, 2, 3
         if (bestGuesses[0] === "" || totalGuesses < bestGuesses[0]) {
             bestGuesses[2] = bestGuesses[1];
             bestGuesses[1] = bestGuesses[0];
@@ -94,22 +120,3 @@ guessButton.addEventListener('click', function () {
         leaderboard[2].textContent = `${bestGuesses[2]}`;
         totalGuesses = 0;
     }
-    console.log("Guesses: " + totalGuesses);
-});
-
-giveUpButton.addEventListener('click', function () {
-    feedback.textContent = `${name}: The correct number was ${randNum}. Better luck next time!`;
-    guessButton.disabled = true;
-    giveUpButton.disabled = true;
-    playButton.disabled = false;
-});
-
-function getDifficulty() {
-    for (let e of difficulty) {
-        if (e.checked) {
-            if (e.id === 'e') return 'easy';
-            if (e.id === 'm') return 'medium';
-            if (e.id === 'h') return 'hard';
-        }
-    }
-}
