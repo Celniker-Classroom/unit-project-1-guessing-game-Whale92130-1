@@ -12,6 +12,9 @@ name = name.charAt(0).toUpperCase() + name.slice(1);
 const feedback = document.getElementById("msg");
 
 let randNum = -1;
+let totalWins = 0;
+let totalGuesses = 0;
+let avgGuesses = 0;
 
 playButton.addEventListener('click', function () {
     const diff = getDifficulty();
@@ -33,7 +36,7 @@ playButton.addEventListener('click', function () {
 });
 
 guessButton.addEventListener('click', function () {
-
+    totalGuesses++;
     const guess = parseInt(guessInput.value);
     if (isNaN(guess)) {
         feedback.textContent = "Please enter a valid number.";
@@ -62,10 +65,16 @@ guessButton.addEventListener('click', function () {
         }
     } else {
         feedback.textContent = `${name}: Correct! You've guessed the number!`;
+        totalWins++;
+        avgGuesses = (((avgGuesses * (totalWins - 1)) + totalGuesses) / totalWins).toFixed(2);
+        totalGuesses = 0;
+        wins.textContent = `Wins: ${totalWins}`;
+        avgScore.textContent = `Average Guesses: ${avgGuesses}`;
         guessButton.disabled = true;
         giveUpButton.disabled = true;
         playButton.disabled = false;
     }
+    console.log("Guesses: " + totalGuesses);
 });
 
 giveUpButton.addEventListener('click', function () {
