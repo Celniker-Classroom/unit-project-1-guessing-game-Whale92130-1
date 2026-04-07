@@ -14,6 +14,7 @@ const feedback = document.getElementById("msg");
 
 let randNum = -1;
 let totalWins = 0;
+let totalAttempts = 0;
 let totalGuesses = 0;
 let avgGuesses = 0;
 let bestGuesses = ["","",""];
@@ -68,6 +69,7 @@ guessButton.addEventListener('click', function () {
     } else {
         feedback.textContent = `${name}: Correct! You've guessed the number!`;
         totalWins++;
+        totalAttempts++;
         updateLeaderboardandGuesses();
     }
     console.log("Guesses: " + totalGuesses);
@@ -75,16 +77,14 @@ guessButton.addEventListener('click', function () {
 
 giveUpButton.addEventListener('click', function () {
     feedback.textContent = `${name}: The correct number was ${randNum}. Better luck next time!`;
-    guessButton.disabled = true;
-    giveUpButton.disabled = true;
-    playButton.disabled = false;
-    if (getDifficulty() === 'easy') {
+    if (getDifficulty() == 'easy') {
         totalGuesses = 3;
-    } else if (getDifficulty() === 'medium') {
+    } else if (getDifficulty() == 'medium') {
         totalGuesses = 10;
-    } else if (getDifficulty() === 'hard') {
+    } else if (getDifficulty() == 'hard') {
         totalGuesses = 100;
     }
+    totalAttempts++;
     updateLeaderboardandGuesses();
 });
 
@@ -98,25 +98,25 @@ function getDifficulty() {
     }
 }
 function updateLeaderboardandGuesses() {
-    
-    avgGuesses = (((avgGuesses * (totalWins - 1)) + totalGuesses) / totalWins).toFixed(2);
-        wins.textContent = `Wins: ${totalWins}`;
-        avgScore.textContent = `Average Guesses: ${avgGuesses}`;
-        guessButton.disabled = true;
-        giveUpButton.disabled = true;
-        playButton.disabled = false;
-        if (bestGuesses[0] === "" || totalGuesses < bestGuesses[0]) {
-            bestGuesses[2] = bestGuesses[1];
-            bestGuesses[1] = bestGuesses[0];
-            bestGuesses[0] = totalGuesses;
-        } else if (bestGuesses[1] === "" || totalGuesses < bestGuesses[1]) {
-            bestGuesses[2] = bestGuesses[1];
-            bestGuesses[1] = totalGuesses;
-        } else if (bestGuesses[2] === "" || totalGuesses < bestGuesses[2]) {
-            bestGuesses[2] = totalGuesses;
-        }
-        leaderboard[0].textContent = `${bestGuesses[0]}`;
-        leaderboard[1].textContent = `${bestGuesses[1]}`;
-        leaderboard[2].textContent = `${bestGuesses[2]}`;
-        totalGuesses = 0;
+    console.log("Total Guesses: " + totalGuesses);
+    avgGuesses = (((avgGuesses * (totalAttempts - 1)) + totalGuesses) / totalAttempts).toFixed(2);
+    wins.textContent = `Wins: ${totalWins}`;
+    avgScore.textContent = `Average Guesses: ${avgGuesses}`;
+    guessButton.disabled = true;
+    giveUpButton.disabled = true;
+    playButton.disabled = false;
+    if (bestGuesses[0] === "" || totalGuesses < bestGuesses[0]) {
+        bestGuesses[2] = bestGuesses[1];
+        bestGuesses[1] = bestGuesses[0];
+        bestGuesses[0] = totalGuesses;
+    } else if (bestGuesses[1] === "" || totalGuesses < bestGuesses[1]) {
+        bestGuesses[2] = bestGuesses[1];
+        bestGuesses[1] = totalGuesses;
+    } else if (bestGuesses[2] === "" || totalGuesses < bestGuesses[2]) {
+        bestGuesses[2] = totalGuesses;
+    }
+    leaderboard[0].textContent = `${bestGuesses[0]}`;
+    leaderboard[1].textContent = `${bestGuesses[1]}`;
+    leaderboard[2].textContent = `${bestGuesses[2]}`;
+    totalGuesses = 0;
     }
