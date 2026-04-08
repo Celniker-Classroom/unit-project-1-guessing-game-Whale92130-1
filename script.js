@@ -43,6 +43,23 @@ function updateDate() {
     const seconds = String(date.getSeconds()).padStart(2, '0');
     dateDisplay.textContent = `${month} ${day}${getSuffix(day)}, ${year} ${hours}:${minutes}:${seconds} ${amPm}`;
 }
+
+function updateTimer(date) {
+    const now = new Date();
+    date.getTime();
+    const diff = now - date;
+    let minutes = Math.floor(diff / 60000);
+    let seconds = Math.floor((diff % 60000) / 1000);
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+    timerDisplay.textContent = `Time Elapsed: ${minutes}:${seconds}`;
+
+}
+
 setInterval(updateDate, 1000);
 updateDate();
 
@@ -51,11 +68,13 @@ let totalWins = 0;
 let totalAttempts = 0;
 let totalGuesses = 0;
 let avgGuesses = 0;
-let bestGuesses = ["","",""];
+let bestGuesses = ["", "", ""];
+let timerInterval;
+let totalTime = 0;
 
 playButton.addEventListener('click', function () {
     let date = new Date();
-
+    timerInterval = setInterval(() => updateTimer(date), 1000);
     const diff = getDifficulty();
     if (diff === 'easy') {
         //from 1 to 3
@@ -106,6 +125,7 @@ guessButton.addEventListener('click', function () {
         feedback.textContent = `${name}: Correct! You've guessed the number!`;
         totalWins++;
         totalAttempts++;
+        clearInterval(timerInterval);
         updateLeaderboardandGuesses();
     }
     console.log("Guesses: " + totalGuesses);
@@ -122,6 +142,7 @@ giveUpButton.addEventListener('click', function () {
     }
     totalWins++;
     totalAttempts++;
+    clearInterval(timerInterval);
     updateLeaderboardandGuesses();
 });
 
@@ -156,4 +177,16 @@ function updateLeaderboardandGuesses() {
     leaderboard[1].textContent = `${bestGuesses[1]}`;
     leaderboard[2].textContent = `${bestGuesses[2]}`;
     totalGuesses = 0;
+    totalTime = totalTime + parseInt(timerDisplay.textContent.split(" ")[2].replace(":", ""));
+    if (parseInt(timerDisplay.textContent.split(" ")[2].replace(":", "")) < parseInt(bestTimeDisplay.textContent.split(" ")[2].replace(":", "")) || bestTimeDisplay.textContent == "Fastest Time: 00:00") {
+        bestTimeDisplay.textContent = `Fastest Time: ${timerDisplay.textContent.split(" ")[2]}`;
+        timerDisplay.textContent = `Time Elapsed: 00:00`;
     }
+    if (avgTimeDisplay.textContent == "Average Time: 00:00") {
+        avgTimeDisplay.textContent = `Average Time: ${timerDisplay.textContent.split(" ")[2]}`;
+    }
+    averageTime = (((totalTime * (totalAttempts - 1)) + parseInt(timerDisplay.textContent.split(" ")[2].replace(":", ""))) / totalAttempts).toFixed(2);
+    avgTimeDisplay.textContent = `Average Time: ${Math.floor(averageTime / 60).toString().padStart(2, '0')}:${(averageTime % 60).toString().padStart(2, '0')}`;
+    totalTime = 0;
+
+}
