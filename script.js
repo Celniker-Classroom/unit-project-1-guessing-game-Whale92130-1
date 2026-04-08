@@ -72,6 +72,17 @@ let bestGuesses = ["", "", ""];
 let timerInterval;
 let totalTime = 0;
 
+guess.addEventListener("keydown", function (event) {
+    if (guessButton.disabled && event.key === "Enter") {
+        playButton.click();
+    } else if (event.key === "Enter") {
+        guessButton.click();
+    }
+    else if (event.key === "Escape") {
+        giveUpButton.click();
+    }
+});
+
 playButton.addEventListener('click', function () {
     let date = new Date();
     timerInterval = setInterval(() => updateTimer(date), 1000);
@@ -183,7 +194,7 @@ function updateLeaderboardandGuesses() {
         timerDisplay.textContent = `Time Elapsed: 00:00`;
     }
     if (avgTimeDisplay.textContent == "Average Time: 00:00") {
-        avgTimeDisplay.textContent = `Average Time: ${timerDisplay.textContent.split(" ")[2]}`;
+        avgTimeDisplay.textContent = `Average Time: ${bestTimeDisplay.textContent.split(" ")[2]}`;
     }
     averageTime = (((totalTime * (totalAttempts - 1)) + parseInt(timerDisplay.textContent.split(" ")[2].replace(":", ""))) / totalAttempts).toFixed(2);
     avgTimeDisplay.textContent = `Average Time: ${Math.floor(averageTime / 60).toString().padStart(2, '0')}:${(averageTime % 60).toString().padStart(2, '0')}`;
