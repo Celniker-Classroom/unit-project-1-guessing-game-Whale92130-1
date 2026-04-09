@@ -11,7 +11,7 @@ const leaderboard = document.getElementsByName("leaderboard");
 let name = prompt("Please enter your name:");
 if (!name) {
     name = "Player";
-}else {
+} else {
     name = name.trim().toLowerCase();
 }
 name = name.charAt(0).toUpperCase() + name.slice(1);
@@ -20,6 +20,10 @@ const dateDisplay = document.getElementById("date");
 const timerDisplay = document.getElementById("timer");
 const bestTimeDisplay = document.getElementById("fastest");
 const avgTimeDisplay = document.getElementById("avgTime");
+const themeSwitch = document.getElementById("themeSwitch");
+const themeLabel = document.getElementById("themeLabel");
+const flashEffect = document.getElementById("flashEffect");
+const flashImage = document.getElementById("flashImage");
 function getSuffix(day) {
     if (day >= 11 && day <= 13) {
         return "th";
@@ -44,6 +48,9 @@ function updateDate() {
         hours -= 12;
         amPm = "PM";
     }
+    if (hours == 0) {
+        hours = 12;
+    }
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const seconds = String(date.getSeconds()).padStart(2, '0');
     dateDisplay.textContent = `${month} ${day}${getSuffix(day)}, ${year} ${hours}:${minutes}:${seconds} ${amPm}`;
@@ -67,6 +74,35 @@ function updateTimer(date) {
 
 setInterval(updateDate, 1000);
 updateDate();
+
+function triggerFlashAnimation(callback) {
+    flashEffect.classList.add("active");
+    flashImage.style.opacity = "1";
+    window.setTimeout(() => {
+        flashEffect.classList.remove("active");
+        flashImage.style.opacity = "0";
+        if (typeof callback === "function") {
+            callback();
+        }
+    }, 1200);
+}
+
+function applyTheme(runAnimation = true) {
+    const isLight = themeSwitch.checked;
+    themeLabel.textContent = isLight ? "Light Mode" : "Dark Mode";
+    if (isLight) {
+        if (runAnimation) {
+            triggerFlashAnimation(() => document.body.classList.add("light-mode"));
+        } else {
+            document.body.classList.add("light-mode");
+        }
+    } else {
+        document.body.classList.remove("light-mode");
+    }
+}
+
+themeSwitch.addEventListener("change", () => applyTheme(true));
+applyTheme(false);
 
 let randNum = -1;
 let totalWins = 0;
