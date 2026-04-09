@@ -1,0 +1,123 @@
+body {
+    background-color: rgb(22, 22, 22);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+h1 {
+    color: white;
+    text-align: center;
+}
+h3 {
+    color: white;
+    text-align: center;
+}
+#guess {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 16px;
+    width: 200px;
+}
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+}
+#playBtn {
+    background-color: #90ee90;
+    color: black;
+}
+#giveUpBtn {
+    background-color: #ff6b6b;
+    color: white;
+}
+#guessBtn {
+    background-color: #1e90ff;
+    color: white;
+}
+#timer {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+#bestTime, #avgTime {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+p {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+ol {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    margin: 0 auto;
+    padding-left: 0;
+    width: fit-content;
+}
+li {
+    list-style-position: inside;
+}
+ul {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+input[type="radio"] {
+    display: none;
+}
+input[type="radio"]:checked + label {
+    color: #3b82f6;
+}
+label {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+h5 {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+#difficulty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+    margin: 0 auto;
+}
+.difficulty p {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+#info {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    font-size: 18px;
+}
+#stats{
+    color: white;
+    margin-right: 50px;
+}
+#leaderboard {
+    color: white;
+    text-align: center;
+    margin-left: 50px;
+}

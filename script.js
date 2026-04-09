@@ -8,7 +8,12 @@ const fastest = document.getElementById("fastest");
 const avgTime = document.getElementById("avgTime");
 const difficulty = [document.getElementById("e"), document.getElementById("m"), document.getElementById("h")];
 const leaderboard = document.getElementsByName("leaderboard");
-let name = prompt("Please enter your name:").toLowerCase();
+let name = prompt("Please enter your name:");
+if (!name) {
+    name = "Player";
+}else {
+    name = name.trim().toLowerCase();
+}
 name = name.charAt(0).toUpperCase() + name.slice(1);
 const feedback = document.getElementById("msg");
 const dateDisplay = document.getElementById("date");
@@ -72,6 +77,8 @@ let bestGuesses = ["", "", ""];
 let timerInterval;
 let totalTime = 0;
 
+
+
 guess.addEventListener("keydown", function (event) {
     if (guessButton.disabled && event.key === "Enter") {
         playButton.click();
@@ -80,6 +87,15 @@ guess.addEventListener("keydown", function (event) {
     }
     else if (event.key === "Escape") {
         giveUpButton.click();
+    }
+    else if (event.key === "d") {
+        if (difficulty[0].checked) {
+            difficulty[1].checked = true;
+        } else if (difficulty[1].checked) {
+            difficulty[2].checked = true;
+        } else {
+            difficulty[0].checked = true;
+        }
     }
 });
 

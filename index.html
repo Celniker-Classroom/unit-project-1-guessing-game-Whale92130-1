@@ -1,39 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>JavaScript Number Guessing Game</title>
-    <script src="script.js" defer></script>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <p id="date"></p>
 
-    <h3>Level</h3>
+<head>
+  <title>JavaScript Number Guessing Game</title>
+  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+  <p id="date"></p>
+
+  <h3>The Guessing Game</h3>
+  <p>Press "D" to cycle through difficulty levels</p>
+  <div class="difficulty">
     <input type="radio" name="level" id="e" value="3" checked><label for="e">Easy</label>
     <input type="radio" name="level" id="m" value="10"><label for="m">Medium</label>
     <input type="radio" name="level" id="h" value="100"><label for="h">Hard</label>
+  </div>
 
 
 
-    <button id="playBtn">Play</button>
+  <button id="playBtn">Play</button>
 
-    <h3 id="msg">Select a Level</h3>
-    <input type="text" id="guess">
-    <button id="guessBtn" disabled>Guess</button>
-    <button id="giveUpBtn" disabled>Give Up</button>
-    <p id="timer">Time Elapsed: 00:00</p>
-    <h3>Stats</h3>
-    <p id="wins">Total wins: 0</p>
-    <p id="avgScore">Average Score: 0</p>
-    <p id="fastest">Fastest Time: 00:00</p>
-    <p id="avgTime">Average Time: 00:00</p>
+  <h3 id="msg">Select a Level</h3>
+  <input type="number" id="guess">
+  <button id="guessBtn" disabled>Guess</button>
+  <button id="giveUpBtn" disabled>Give Up</button>
+  <p id="timer">Time Elapsed: 00:00</p>
+  <div id="info">
+    <div id="stats">
+      <h3>Stats</h3>
+      <p id="wins">Total wins: 0</p>
+      <p id="avgScore">Average Score: 0</p>
+      <p id="fastest">Fastest Time: 00:00</p>
+      <p id="avgTime">Average Time: 00:00</p>
+    </div>
+    <div id="leaderboard">
+      <h3>Leaderboard</h3>
+      <h5>Lowest Guesses</h5>
+      <ol>
+        <li name="leaderboard"></li>
+        <li name="leaderboard"></li>
+        <li name="leaderboard"></li>
+      </ol>
+    </div>
+  </div>
+</body>
 
-    <h3>Leaderboard</h3>
-    <h5>Lowest Guesses</h5>
-    <ol>
-      <li name="leaderboard"></li>
-      <li name="leaderboard"></li>
-      <li name="leaderboard"></li>
-    </ol>
-  </body>
 </html>
