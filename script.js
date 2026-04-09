@@ -166,6 +166,18 @@ function getDifficulty() {
         }
     }
 }
+
+function parseTimeText(timeText) {
+    const parts = timeText.split(":");
+    return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+}
+
+function formatSeconds(seconds) {
+    const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${minutes}:${secs}`;
+}
+
 function updateLeaderboardandGuesses() {
     console.log("Total Guesses: " + totalGuesses);
     avgGuesses = (((avgGuesses * (totalAttempts - 1)) + totalGuesses) / totalAttempts).toFixed(2);
@@ -174,6 +186,7 @@ function updateLeaderboardandGuesses() {
     guessButton.disabled = true;
     giveUpButton.disabled = true;
     playButton.disabled = false;
+
     if (bestGuesses[0] === "" || totalGuesses < bestGuesses[0]) {
         bestGuesses[2] = bestGuesses[1];
         bestGuesses[1] = bestGuesses[0];
@@ -184,20 +197,21 @@ function updateLeaderboardandGuesses() {
     } else if (bestGuesses[2] === "" || totalGuesses < bestGuesses[2]) {
         bestGuesses[2] = totalGuesses;
     }
+
     leaderboard[0].textContent = `${bestGuesses[0]}`;
     leaderboard[1].textContent = `${bestGuesses[1]}`;
     leaderboard[2].textContent = `${bestGuesses[2]}`;
     totalGuesses = 0;
-    totalTime = totalTime + parseInt(timerDisplay.textContent.split(" ")[2].replace(":", ""));
-    if (parseInt(timerDisplay.textContent.split(" ")[2].replace(":", "")) < parseInt(bestTimeDisplay.textContent.split(" ")[2].replace(":", "")) || bestTimeDisplay.textContent == "Fastest Time: 00:00") {
-        bestTimeDisplay.textContent = `Fastest Time: ${timerDisplay.textContent.split(" ")[2]}`;
-        timerDisplay.textContent = `Time Elapsed: 00:00`;
-    }
-    if (avgTimeDisplay.textContent == "Average Time: 00:00") {
-        avgTimeDisplay.textContent = `Average Time: ${bestTimeDisplay.textContent.split(" ")[2]}`;
-    }
-    averageTime = (((totalTime * (totalAttempts - 1)) + parseInt(timerDisplay.textContent.split(" ")[2].replace(":", ""))) / totalAttempts).toFixed(2);
-    avgTimeDisplay.textContent = `Average Time: ${Math.floor(averageTime / 60).toString().padStart(2, '0')}:${(averageTime % 60).toString().padStart(2, '0')}`;
-    totalTime = 0;
 
+    const elapsedSeconds = parseTimeText(timerDisplay.textContent.split(" ")[2]);
+    totalTime += elapsedSeconds;
+
+    const currentBestText = bestTimeDisplay.textContent.split(" ")[2] || "00:00";
+    const currentBestSeconds = parseTimeText(currentBestText);
+    if (bestTimeDisplay.textContent === "Fastest Time: 00:00" || elapsedSeconds < currentBestSeconds) {
+        bestTimeDisplay.textContent = `Fastest Time: ${formatSeconds(elapsedSeconds)}`;
+    }
+
+    const averageSeconds = Math.round(totalTime / totalAttempts);
+    avgTimeDisplay.textContent = `Average Time: ${formatSeconds(averageSeconds)}`;
 }
