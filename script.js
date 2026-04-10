@@ -8,6 +8,7 @@ const fastest = document.getElementById("fastest");
 const avgTime = document.getElementById("avgTime");
 const difficulty = [document.getElementById("e"), document.getElementById("m"), document.getElementById("h")];
 const leaderboard = document.getElementsByName("leaderboard");
+
 let name = prompt("Please enter your name:");
 if (!name) {
     name = "Player";
@@ -15,15 +16,14 @@ if (!name) {
     name = name.trim().toLowerCase();
 }
 name = name.charAt(0).toUpperCase() + name.slice(1);
+
 const feedback = document.getElementById("msg");
 const dateDisplay = document.getElementById("date");
 const timerDisplay = document.getElementById("timer");
 const bestTimeDisplay = document.getElementById("fastest");
 const avgTimeDisplay = document.getElementById("avgTime");
-const themeSwitch = document.getElementById("themeSwitch");
-const themeLabel = document.getElementById("themeLabel");
-const flashEffect = document.getElementById("flashEffect");
-const flashImage = document.getElementById("flashImage");
+const darkMode = document.getElementById("darkMode");
+
 function getSuffix(day) {
     if (day >= 11 && day <= 13) {
         return "th";
@@ -36,6 +36,7 @@ function getSuffix(day) {
         }
     }
 }
+
 function updateDate() {
     date = new Date();
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -69,40 +70,19 @@ function updateTimer(date) {
         seconds = "0" + seconds;
     }
     timerDisplay.textContent = `Time Elapsed: ${minutes}:${seconds}`;
-
 }
 
 setInterval(updateDate, 1000);
 updateDate();
 
-function triggerFlashAnimation(callback) {
-    flashEffect.classList.add("active");
-    flashImage.style.opacity = "1";
-    window.setTimeout(() => {
-        flashEffect.classList.remove("active");
-        flashImage.style.opacity = "0";
-        if (typeof callback === "function") {
-            callback();
-        }
-    }, 1200);
-}
+if (darkMode) {
+    darkMode.checked = true;
+    document.body.classList.remove("theme-light");
 
-function applyTheme(runAnimation = true) {
-    const isLight = themeSwitch.checked;
-    themeLabel.textContent = isLight ? "Light Mode" : "Dark Mode";
-    if (isLight) {
-        if (runAnimation) {
-            triggerFlashAnimation(() => document.body.classList.add("light-mode"));
-        } else {
-            document.body.classList.add("light-mode");
-        }
-    } else {
-        document.body.classList.remove("light-mode");
-    }
+    darkMode.addEventListener("change", function () {
+        document.body.classList.toggle("theme-light", !darkMode.checked);
+    });
 }
-
-themeSwitch.addEventListener("change", () => applyTheme(true));
-applyTheme(false);
 
 let randNum = -1;
 let totalWins = 0;
@@ -112,8 +92,6 @@ let avgGuesses = 0;
 let bestGuesses = ["", "", ""];
 let timerInterval;
 let totalTime = 0;
-
-
 
 guess.addEventListener("keydown", function (event) {
     if (guessButton.disabled && event.key === "Enter") {
@@ -140,13 +118,10 @@ playButton.addEventListener('click', function () {
     timerInterval = setInterval(() => updateTimer(date), 1000);
     const diff = getDifficulty();
     if (diff === 'easy') {
-        //from 1 to 3
         randNum = Math.floor(Math.random() * 3) + 1;
     } else if (diff === 'medium') {
-        //from 1 to 10
         randNum = Math.floor(Math.random() * 10) + 1;
     } else if (diff === 'hard') {
-        //from 1 to 100
         randNum = Math.floor(Math.random() * 100) + 1;
     }
     guessInput.value = '';

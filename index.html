@@ -9,17 +9,13 @@
 
 <body>
   <div id="themeToggle">
-    <input type="checkbox" id="themeSwitch">
-    <label for="themeSwitch"><span id="themeLabel">Light Mode</span></label>
-  </div>
-  <div id="flashEffect" class="flash-effect" aria-hidden="true">
-    <div class="flash-screen"></div>
-    <img id="flashImage" src="images/flashbang.png" alt="Flashbang" width="100">
-  </div>
+    <label for="darkMode" id="DMtext">Dark Mode</label>
+    <input type="checkbox" id="darkMode" checked>
+</div>
   <p id="date"></p>
 
   <h3>The Guessing Game</h3>
-  <p>Press "D" to cycle through difficulty levels</p>
+  <p>Press "D" to cycle through difficulty levels, "Esc" to give up, and "Enter" to play/guess</p>
   <div class="difficulty">
     <input type="radio" name="level" id="e" value="3" checked><label for="e">Easy</label>
     <input type="radio" name="level" id="m" value="10"><label for="m">Medium</label>
