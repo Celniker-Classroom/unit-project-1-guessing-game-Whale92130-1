@@ -9,7 +9,7 @@ const avgTime = document.getElementById("avgTime");
 const difficulty = [document.getElementById("e"), document.getElementById("m"), document.getElementById("h")];
 const leaderboard = document.getElementsByName("leaderboard");
 const lastGuessDisplay = document.getElementById("lastGuess");
-
+guessInput.focus();
 let name = prompt("Please enter your name:");
 if (!name) {
     name = "Player";
@@ -115,6 +115,7 @@ guess.addEventListener("keydown", function (event) {
 });
 
 playButton.addEventListener('click', function () {
+    guessInput.focus();
     let date = new Date();
     timerInterval = setInterval(() => updateTimer(date), 1000);
     const diff = getDifficulty();
