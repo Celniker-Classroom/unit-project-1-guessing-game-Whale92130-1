@@ -8,6 +8,7 @@ const fastest = document.getElementById("fastest");
 const avgTime = document.getElementById("avgTime");
 const difficulty = [document.getElementById("e"), document.getElementById("m"), document.getElementById("h")];
 const leaderboard = document.getElementsByName("leaderboard");
+const lastGuessDisplay = document.getElementById("lastGuess");
 
 let name = prompt("Please enter your name:");
 if (!name) {
@@ -166,11 +167,13 @@ guessButton.addEventListener('click', function () {
         clearInterval(timerInterval);
         updateLeaderboardandGuesses();
     }
+    lastGuessDisplay.textContent = `Last Guess: ${guess}`;
     console.log("Guesses: " + totalGuesses);
 });
 
 giveUpButton.addEventListener('click', function () {
     feedback.textContent = `${name}: The correct number was ${randNum}. Better luck next time!`;
+    lastGuessDisplay.textContent = `Last Guess: ${guess}`;
     if (getDifficulty() == 'easy') {
         totalGuesses = 3;
     } else if (getDifficulty() == 'medium') {
