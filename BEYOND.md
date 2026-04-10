@@ -13,6 +13,6 @@
     Lines: 1-15 in styles.css
     How it makes the game better: More customization for the user.
 4. Last Guess Display
-    Lines: 170, 176 script.js
+    Lines: 170, 176 in script.js
     How it makes the game better: Helps users who suffer from short-term memory loss or who are lazy.
 
